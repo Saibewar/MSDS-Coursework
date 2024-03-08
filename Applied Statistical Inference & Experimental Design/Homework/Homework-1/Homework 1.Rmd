@@ -1,0 +1,35 @@
+---
+title: "Homework1"
+author: "Aishwarya"
+date: "10/4/2021"
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document: default
+---
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(nycflights13)
+
+```
+
+```{r}
+ewr_flights <- flights %>% 
+  filter(origin == "EWR" & (carrier == "EV" | carrier == "UA")) %>%
+  mutate(late = (dep_delay > 0)) %>%
+  mutate(very_late = (dep_delay > 30))
+ewr_flights
+```
+
+```{r}
+total_mean_proportion <- ewr_flights %>% 
+  group_by(carrier) %>% 
+  summarize(proportion_late_mean = mean(late, na.rm = TRUE),
+            proportion_verylate_mean = mean(very_late, na.rm = TRUE))
+total_mean_proportion
+```
+
+
