@@ -1,0 +1,339 @@
+---
+title: "Homework1"
+author: "Aishwarya"
+date: "10/4/2021"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(nycflights13)
+```
+
+```{r}
+alaska_flights <- flights %>%
+  filter(carrier=="AS")
+delta_flights <- flights %>%
+filter(carrier=="DL")
+```
+
+```{r}
+ggplot(data = alaska_flights, aes(x = dep_delay, y = arr_delay))+
+  geom_point()
+ggplot(data = delta_flights, aes(x = dep_delay, y = arr_delay))+
+  geom_point()
+```
+
+```{r}
+ggplot(data = delta_flights, aes(x = dep_delay, y = arr_delay))+
+  geom_line()
+```
+
+```{r}
+ggplot(data = delta_flights, aes(x = dep_delay, y = arr_delay))+
+  geom_point(alpha = 0.2)
+```
+
+```{r}
+ggplot(data = delta_flights, aes(x = month, y = arr_delay))+
+  geom_point(alpha = 0.2)
+```
+
+```{r}
+ggplot(data = delta_flights, aes(x = dep_delay, y = arr_delay, size = distance))+
+  geom_point(alpha = 0.2)
+```
+
+
+```{r}
+ggplot(data = alaska_flights, aes(x = dep_delay, y = arr_delay, size = distance))+
+  geom_point(alpha = 0.2)
+```
+```{r}
+glimpse(alaska_flights)
+```
+
+```{r}
+ggplot(data = delta_flights, aes(x = dep_delay, y = arr_delay, color = origin))+
+  geom_point(alpha = 0.2)
+```
+
+```{r}
+ggplot(data = delta_flights, aes(x = dep_delay, y = arr_delay, shape = origin))+
+  geom_point(alpha = 0.2)
+```
+
+```{r}
+x <- c(10,10,10,10,10,10,10,10,10,10,30,30,30,30,30,5,15,20,25,35)
+y <- c(30,30,30,30,30,30,30,30,30,30,50,50,50,50,50,80,50,40,25,0)
+plot.data <- tibble(x, y)
+```
+
+```{r}
+ggplot(data=plot.data, aes(x=x, y=y))+
+geom_point()
+```
+```{r}
+ggplot(data=plot.data, aes(x=x, y=y))+
+geom_jitter(width = 1, height = 5)
+```
+
+```{r}
+early_january_weather <- weather %>% 
+  filter(origin == "EWR" & month == 1 & day <= 15)
+```
+
+
+```{r}
+ggplot(data = early_january_weather, mapping = aes(x = time_hour, y = temp)) +
+  geom_line()
+```
+
+
+```{r}
+ggplot(data = alaska_flights, aes(y = dep_delay)) +
+  geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = flights, aes(x = carrier, y = dep_delay)) +
+  geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = flights, aes(x = carrier, y = dep_delay)) +
+  geom_boxplot() +
+  ylim(-25,100)
+```
+
+```{r}
+glimpse(weather)
+```
+
+
+```{r}
+ggplot(data = weather, mapping = aes(x = month, y = temp)) +
+  geom_boxplot()
+```
+
+
+
+```{r}
+ggplot(data = weather, mapping = aes(x = factor(month), y = temp)) +
+  geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_histogram()
+```
+
+
+```{r}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_histogram(color="white")
+```
+
+```{r}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_histogram(color="white", fill="#440079")
+```
+
+
+
+```{r}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_histogram(binwidth=10, color="white", fill="#440079")
+```
+
+
+```{r}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_histogram(breaks=seq(0, 105, by=5), color="white", fill="#440079")
+```
+
+
+```{r}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_histogram(breaks=seq(0,105, by=5), color="white", fill="#440079") +
+  facet_wrap(~ month)
+```
+
+```{r}
+ggplot(data = weather, mapping = aes(x = temp)) +
+  geom_histogram(breaks=seq(0,105, by=5), color="white", fill="#440079") +
+  facet_wrap(~ month, nrow=4)
+```
+
+```{r}
+ggplot(data = flights, mapping = aes(x = carrier)) +
+  geom_bar()
+```
+
+```{r}
+fruits_counted <- tibble(
+  fruit = c("apple", "orange"),
+  number = c(3, 2)
+)
+fruits_counted
+```
+```{r}
+ggplot(data = fruits_counted, mapping = aes(x = fruit, y = number)) +
+geom_col()
+```
+
+```{r}
+ggplot(data = flights, mapping = aes(x = carrier, fill = origin)) +
+  geom_bar()
+```
+
+```{r}
+ggplot(data = flights, mapping = aes(x = carrier, fill = origin)) +
+  geom_bar(position = position_dodge(preserve = "single"))
+```
+
+```{r}
+normal_simulation <- rnorm(20, 50, 3)
+```
+
+```{r}
+qqnorm(normal_simulation) 
+qqline(normal_simulation)
+```
+
+```{r}
+exponential_simulation <- rexp(20, .02) 
+qqnorm(exponential_simulation) 
+qqline(exponential_simulation)
+```
+
+```{r}
+t_simulation <- rt(20, 4)
+qqnorm(t_simulation)
+qqline(t_simulation)
+```
+
+
+```{r}
+2*pbinom(461, 1000, .5, lower.tail=TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+library(readxl)
+clouds <- read_excel(file.choose())
+glimpse(clouds)
+
+ggplot(data=clouds, mapping=aes(x=Rainfall)) + 
+  geom_histogram() + 
+  facet_wrap(~Treatment, nrow=2)
+```
+
+
+
+```{r}
+#calculate and store the observed difference in the sample
+observed <- median(clouds$Rainfall[clouds$Treatment=="Seeded"]) - median(clouds$Rainfall[clouds$Treatment=="Unseeded"])
+
+#N = number of simulations we will use
+N <- 10^4-1
+
+#sample.size = the number of observations in our sample
+sample.size = nrow(clouds)
+
+#group.1.size = the number of observations in the first group
+group.1.size = nrow(clouds[clouds$Treatment=="Seeded",])
+
+#create a blank vector to store the simulation results
+result <- numeric(N)
+
+#use a for loop to cycle through values of i ranging from 1 to N
+for(i in 1:N)
+{
+  #each iteration, randomly sample index values
+  #sample.size gives the total number of index values to sample from
+  #group.1.size gives the number of index values to sample
+  #sample without replacement
+  #indexes sampled will be treated as the "seeded" group, indexes not sample as "unseeded"
+  index = sample(sample.size, size=group.1.size, replace = FALSE)
+
+  #calculate and store the difference in 
+  #median rainfall between the index and non-index groups
+  result[i] = median(clouds$Rainfall[index]) - median(clouds$Rainfall[-index])
+}
+
+#plot a histogram of the simulated differences
+#add a vertical line at the observed difference
+ggplot(data=tibble(result), mapping = aes(x=result)) + 
+  geom_histogram(breaks=seq(-300,300,by=25)) +
+  geom_vline(xintercept = observed, color = "red")
+
+#Calculate the p-value
+
+```
+
+```{r}
+(sum(result >= observed) + 1) / (N + 1)
+```
+
+In this case, our p-value came out quite small. This suggests that our observed difference is very unusual relative to the sorts of differences we could expect to see just via random chance. This would indicate that the cloud seeding does have an effect. We would reject our null hypothesis in favor of the alternative hypothesis, and conclude that there is evidence that median rainfall is higher for seeded than unseeded clouds.
+
+ 
+ alpha=0.05
+ p-value<alpha--->Reject null hypothesis in favour of alternative hypothesis
+ p-value>alpha--->Fail to reject null hypothesis
+
+<,>--> one sided test
+=--> two sided test-->multiply by 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

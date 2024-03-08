@@ -1,0 +1,254 @@
+---
+title: "Program1"
+author: "Aishwarya"
+date: "9/27/2021"
+output: html_document
+---
+## This is a header
+We can write text here. 
+
+## This is another header
+Below is a code chunk:
+
+```{r}
+x <- 8
+y <- c(1, 7, 20)
+z <- 9/5 * y + 32
+
+```
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+
+```{r}
+f <- function(x)
+{
+  return(x^2)
+}
+
+g <- function(x)
+{
+  return(x+5)
+}
+
+h <- function(x)
+{
+  return(log(x))
+}
+```
+```{r}
+g(f(3))
+```
+```{r}
+z.squared <- z^2
+```
+
+```{r}
+h(g(f(3)))
+```
+```{r}
+library(nycflights13)
+```
+
+
+```{r}
+3 %>%
+  f() %>%
+  g() %>%
+  h()
+```
+
+
+```{r}
+portland_flights <- flights %>% 
+  filter(dest == "PDX")
+glimpse(portland_flights)
+```
+
+```{r}
+btv_sea_flights_fall <- flights %>% 
+  filter(origin == "JFK" & (dest == "BTV" | dest == "SEA") & month >= 10)
+glimpse(btv_sea_flights_fall)
+```
+
+```{r}
+btv_sea_flights_fall <- flights %>% 
+  filter(origin == "JFK", (dest == "BTV" | dest == "SEA"), month >= 10)
+glimpse(btv_sea_flights_fall)
+```
+
+```{r}
+not_BTV_SEA <- flights %>% 
+  filter(!(dest == "BTV" | dest == "SEA"))
+glimpse(not_BTV_SEA)
+```
+
+
+```{r}
+many_airports <- flights %>% 
+  filter(dest == "SEA" | dest == "SFO" | dest == "PDX" | 
+         dest == "BTV" | dest == "BDL")
+glimpse(many_airports)
+```
+
+```{r}
+many_airports <- flights %>% 
+  filter(dest %in% c("SEA", "SFO", "PDX", "BTV", "BDL"))
+glimpse(many_airports)
+```
+
+```{r}
+summary_temp <- weather %>% 
+  summarize(mean = mean(temp), std_dev = sd(temp))
+summary_temp
+```
+
+```{r}
+summary_temp <- weather %>% 
+  summarize(mean = mean(temp, na.rm = TRUE), 
+            std_dev = sd(temp, na.rm = TRUE))
+summary_temp
+```
+
+```{r}
+summary_monthly_temp <- weather %>% 
+  group_by(month) %>% 
+  summarize(mean = mean(temp, na.rm = TRUE), 
+            std_dev = sd(temp, na.rm = TRUE))
+summary_monthly_temp
+```
+
+```{r}
+weather
+```
+
+```{r}
+weather %>% 
+  group_by(month)
+```
+
+```{r}
+weather %>%
+  group_by(month) %>%
+  ungroup()
+```
+
+```{r}
+by_origin <- flights %>% 
+  group_by(origin) %>% 
+  summarize(count = n())
+by_origin
+```
+
+```{r}
+by_origin_monthly <- flights %>% 
+  group_by(origin, month) %>% 
+  summarize(count = n())
+by_origin_monthly
+```
+
+```{r}
+freq_dest <- flights %>% 
+  group_by(dest) %>% 
+  summarize(num_flights = n())
+freq_dest
+```
+
+```{r}
+freq_dest %>% 
+  arrange(num_flights)
+```
+
+```{r}
+freq_dest %>% 
+  arrange(desc(num_flights))
+```
+
+```{r}
+flights_joined <- flights %>% 
+  inner_join(airlines, by = "carrier")
+glimpse(flights)
+```
+
+```{r}
+flights_with_airport_names <- flights %>% 
+  inner_join(airports, by = c("dest" = "faa"))
+glimpse(flights_with_airport_names)
+```
+
+```{r}
+named_dests <- flights %>%
+  group_by(dest) %>%
+  summarize(num_flights = n()) %>%
+  arrange(desc(num_flights)) %>%
+  inner_join(airports, by = c("dest" = "faa")) %>%
+  rename(airport_name = name)
+named_dests
+```
+
+
+```{r}
+flights_weather_joined <- flights %>%
+  inner_join(weather, by = c("year", "month", "day", "hour", "origin"))
+glimpse(flights_weather_joined)
+```
+
+```{r}
+flights %>% 
+  select(carrier, flight)
+```
+
+
+```{r}
+flights_no_year <- flights %>% select(-year)
+```
+
+```{r}
+library(readr)
+```
+
+```{r}
+library(tidyr) 
+```
+
+```{r}
+library(fivethirtyeight)
+```
+```{r}
+glimpse(drinks)
+```
+
+```{r}
+drinks_smaller <- drinks %>% 
+  filter(country %in% c("USA", "China", "Italy", "Saudi Arabia")) %>% 
+  select(-total_litres_of_pure_alcohol) %>% 
+  rename(beer = beer_servings, spirit = spirit_servings, wine = wine_servings)
+drinks_smaller
+```
+
+```{r}
+drinks_smaller_tidy <- drinks_smaller %>% 
+  pivot_longer(names_to = "type", 
+               values_to = "servings", 
+               cols = -country)
+drinks_smaller_tidy
+```
+```{r}
+glimpse(flights)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
